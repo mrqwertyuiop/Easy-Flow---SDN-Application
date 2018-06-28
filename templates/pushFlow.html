@@ -1,0 +1,711 @@
+<!doctype html>
+<html>
+   <head>
+      <style type="text/css">
+          
+          .linkSaveDownload
+          {  
+            text-decoration: none;
+            color: black;
+        border-style: solid;
+        border-color: #2b2d42; 
+        background-color: white;          }
+
+          .linkSaveDownload:hover
+          {  
+            text-decoration: none;
+            color: white;
+            border-color: #2b2d42;
+        background-color: #282d42;
+          }
+
+         body{
+              font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+          margin: 0px;
+          }
+          
+          #tulisanKosong{
+              border: none;
+              text-align: center;
+              font-size: 16px;
+              font-stretch: expanded;
+          }
+
+      .divDeviceTitle {
+              color: #282d42;
+              
+          }
+          
+          .divAccordionSection {
+                  background-color: #edf2f4;
+                    border-right: none;
+                    border-bottom: none;
+                    border-top: none;
+                    color: white;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 16px;
+                    cursor: pointer;
+                    width: 100%;              
+            border-left-style: solid;
+                    border-left-width: thick;
+                    border-left-color: #282d42;
+          }
+          
+          .divAccordionSection:hover {
+              background-color: #ffffff;
+              border-left-style: solid;
+              border-left-width: thick;
+              border-left-color: #282d42;
+              
+          }
+    
+
+         .devicetable {
+         border-collapse:collapse;
+         border: 1px solid;
+         width:100%;
+         border-spacing: 0;    
+         }
+
+     .devicetable th {
+        background-color: #282d42;
+        color: white;
+    }
+         
+         /*------------------------------- */     
+         /*------------------------------- */      
+         #daftarDevice {
+         }
+         .showAllTableFLow {
+         background-color:black; 
+         overflow:hidden;
+         color: brown;
+         }
+          
+         #nodeId{
+         width: 50%;
+         }
+          
+         button.accordion {
+         background-color: #eee;
+         color: #444;
+         cursor: pointer;
+         padding: 18px;
+         width: 100%;
+         border: none;
+         text-align: left;
+         outline: none;
+         font-size: 15px;
+         transition: 0.4s;
+         }
+
+         button.accordion.active, button.accordion:hover {
+         background-color: #ddd;
+         }
+
+         div.device {
+         background-color: white;
+         max-height: 0;
+         overflow: hidden;
+         transition: 0.6s ease-in-out;
+         opacity: 0;
+         }
+
+         div.device.show {
+         opacity: 1;
+         max-height: 500px;  
+         }
+
+    div.container {
+         width: 100%;
+         max-height: 100vh;
+         }
+        
+     footer {
+         clear: left;
+           padding: 1em; 
+         color: #d8e2dc;
+         background-color: #282d42;
+         text-align: center;
+     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+         }
+
+        header {
+         padding: 1em;
+         position: static; 
+         color: #d8e2dc;
+         background-color: #282d42;
+         text-align: left;
+         font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+         }
+                          
+         .headerDiv{
+          display: inline-block;
+        }
+
+         .navigation {
+                list-style-type: none;
+                margin: 0px;
+                padding: 0px;
+                overflow: hidden;
+                background-color: #282d42;
+                background-size: cover;
+            }
+
+        .navigation li {
+            float: left;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .navigation li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 16px;
+            text-decoration: none;
+        }
+
+        .navigation li a:hover {
+            background-color: #8d99ae;
+        }
+        
+        #flowLogo {
+        max-height: 50px;
+        }
+        
+         article {
+         padding: 2em;
+         overflow: hidden;
+         }
+
+         table.form {
+         border-collapse: collapse;
+         border-spacing: 0;
+         width: 100%;
+         border: 1px solid #ddd;
+         }
+    
+         table.saved {
+         border-collapse: collapse;
+         border-spacing: 0;
+         width: 100%;
+         border: 1px solid #ddd;
+         }
+
+         th, td {
+         text-align: left;
+         padding: 16px;
+         }
+          
+         tr:nth-child(even) {
+         background-color: #FFFFFF;
+         }
+         
+          tr:nth-child(odd) {
+              
+            background-color: #edf2f4;
+          }
+          
+          table thead tr{
+              background-color: white;
+          }
+      </style>
+   <title>Easy Flow</title>
+   <link rel="easy flow icon" href="{{url_for('static', filename='favicon.png')}}">
+   </head>
+   
+   <body>
+      <div class="container">
+         
+     <header>
+         
+             <img id="flowLogo" src="/static/logoputih.png" alt="Easy Flow">
+         
+         
+         <div class='headerDiv'>
+         <ul class="navigation">
+           <li><a href="/" class="navigation">Home</a></li>
+           <li><a href="/push" class="navigation">Build New Flow</a></li>  
+           <li><a href="/upload" class="navigation">Upload Flow File</a></li>
+           <li><a href="/settings" class="navigation">Controller Settings</a></li>
+           <li><a href="/about" class="navigation">About</a></li>
+        </ul>
+        </div>
+      </header>
+
+
+         <article>
+            <h1 id="daftarDevice">Built Flow List</h1>
+            <div id = "deviceListId" class="deviceList">
+            </div>
+            
+            
+            <br>
+               
+             <a href="pushAll" id="linkKirim" class ='linkSaveDownload'><b>Push All Flows</b></a>
+             <a id='downloadLink' class = 'linkSaveDownload'>Download Flow</a>
+         <a href="upload" id='uploadLink' class = 'linkSaveDownload'>Upload Flow File</a>
+            <br>
+        <br>
+            <h1>Build New Flow</h1>
+            <table class="form">
+               <form action = "/saveFlow" method = "POST" name ="FlowForm" onsubmit = "return validateFlow()">
+                  <tr>
+                     <td>Node ID</td>
+                     <th><select id="nodeId" name="NodeID" onchange="java_script_:showOutport(this.options[this.selectedIndex].value)"></select> </th>
+                  </tr>
+                  <tr>
+                     <td>Table ID</td>
+                     <td><input type = "text" name = "TableID" placeholder="example: 0"/></td>
+                  </tr>
+                  <tr>
+                     <td>Flow ID</td>
+                     <td><input type = "text" name = "FlowID" placeholder="example: 10" /></td>
+                  </tr>
+                  <tr>
+                     <td>Priority</td>
+                     <td><input type ="text" name = "Priority" placeholder="example: 200"/></td>
+                  </tr>
+                  <tr>
+                     <td>Flow Name</td>
+                     <td><input type ="text" name = "FlowName" placeholder="example: Flow1"/></td>
+                  </tr>
+                  <tr>
+                     <td>InPort</td>
+                     <td><input type ="text" name = "InPort" placeholder="example: 1"/></td>
+                  </tr>
+                  <tr>
+                     <td>IP Source</td>
+                     <td><input type ="text" name = "IPSource" placeholder="example: 10.10.0.0/24" /></td>
+                  </tr>
+                  <tr>
+                     <td>IP Destination</td>
+                     <td><input type ="text" name = "IPDestination" placeholder="example: 11.10.0.0/24" /></td>
+                  </tr>
+                  <tr>
+                     <td>Ethernet Type</td>
+                     <td><input type ="text" name = "EthernetType" placeholder="example: 2048"/></td>
+                  </tr>
+                  <tr>
+                     <td>Ethernet Source</td>
+                     <td><input type ="text" name = "EthernetSource" placeholder="example:19:40:A2:BF:00:22"/></td>
+                  </tr>
+                  <tr>
+                     <td>Ethernet Destination</td>
+                     <td><input type ="text" name = "EthernetDestination" placeholder="example:19:40:A2:BF:00:22"/></td>
+                  </tr>
+                  <tr>
+                     <td>TCP Source</td>
+                     <td><input type ="text" name = "TCPSource" placeholder="example: 80"/></td>
+                  </tr>
+                  <tr>
+                     <td>TCP Destination</td>
+                     <td><input type ="text" name = "TCPDestination" placeholder="example: 21" /></td>
+                  </tr>
+                  <tr>
+                     <td>Flow Actions</td>
+                     <td> 
+                        <input type="checkbox" name="DropAction" onclick='disabledButtonDrop()'>Drop
+                        <input type="checkbox" name="FloodAction" onclick='disabledButtonFlood()'>Flood
+                        <input type="checkbox" name="NormalAction" onclick='disabledButtonNormal()'>Normal
+                        <input type="checkbox" name="ControllerAction" onclick='disabledButtonController()'>Controller
+                        <input type="checkbox" name="OutputAction" onclick='disabledButtonOutput()'>Output
+                        <input type="checkbox" name="GotoTableAction" onclick='disabledButtonResubmit()'>Resubmit
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>OutPort Number</td>
+                     <td><input type ="text" name = "OutputActionPorts" id="hiddenOutPortSelection" placeholder="example: 1" disabled="true"/></td>
+                  </tr>
+                  <tr>
+                     <td>Go To Table Number</td>
+                     <td><input type ="text" name = "GotoTableNumbers" id="hiddenGotoTableSelection" placeholder="example: 1" disabled="true"/></td>
+                  </tr>
+                  <tr>
+                     <td>Cookie</td>
+                     <td><input type ="text" name = "Cookie" placeholder="example: 1"/></td>
+                  </tr>
+                  <tr>
+                     <td>Cookie Mask</td>
+                     <td><input type ="text" name = "CookieMask" placeholder="example: 255"/></td>
+                  </tr>
+                  <tr>
+                     <td>Hard Timeout</td>
+                     <td><input type ="text" name = "HardTimeout" placeholder="example: 12000"/></td>
+                  </tr>
+                  <tr>
+                     <td>Idle Timeout</td>
+                     <td><input type ="text" name = "IdleTimeout" placeholder="example: 12000"/></td>
+                  </tr>
+                  <tr>
+                     <td></td>
+                     <td>
+                        <input type = "submit" value = "Push" />
+                     </td>
+                  </tr>
+               </form>
+            </table>
+         </article>
+         <footer>
+            Copyright &copy; Team SDN - 18114019 (Radifan Pradana C) - 18114021 (Petra Febrianto L) - 18114024 (Fandi Rusdiantara)
+         </footer>
+      </div>
+      <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+      <script>
+
+         var arrayDev = [];
+                      
+
+        //get data nodeIdList dari python
+        var connectedNodeIDList = JSON.parse ('{{connectedNodeIDList | tojson}}');
+        //contoh bentuk data
+        //[{"Table ID":"123","Priority":"123","FlowID":8848,"Matches":"Nepal", "Actions":"DROP1"}];   
+        
+          //mengisi nodeIdList untuk form
+       
+     for (var i = 0; i < connectedNodeIDList.length; i++) {
+            var temp = connectedNodeIDList[i].slice(9);
+            arrayDev.push(temp);
+         }    
+        
+        //menyiapkan data untuk setiap tabel
+        var flowList = JSON.parse ('{{savedFlowsTable | tojson}}');
+        var savedJSON = JSON.parse ('{{savedFlowsJSON | tojson}}');
+          //alert('hola');
+          
+          
+        //cadangan data yang memiliki flow count
+        
+    
+        var FlowsNone = [{"Table ID":"none","ReferenceNumber":"none","Priority":"none","FlowID":'none',"Matches":"none", "Actions":"none"}];
+        
+        //fungsi table
+        function buildTable(data) {
+            var table = document.createElement("table");
+            table.className="devicetable";
+            var thead = document.createElement("thead");
+            var tbody = document.createElement("tbody");
+            var headRow = document.createElement("tr");
+            ["Table ID","Flow ID","Priority","Matches","Action","Reference Number"].forEach(function(el) {
+              var th = document.createElement("th");
+              th.appendChild(document.createTextNode(el));
+              headRow.appendChild(th);
+            });
+            thead.appendChild(headRow);
+            table.appendChild(thead); 
+            data.forEach(function(el) {
+              var tr = document.createElement("tr");
+              for (var o in el) {
+                var td = document.createElement("td");
+                td.className = "flowCell";
+        td.setAttribute('style','text-align: center');
+                td.appendChild(document.createTextNode(el[o]))
+                tr.appendChild(td);
+              }
+              tbody.appendChild(tr);  
+            });
+            table.appendChild(tbody);
+            
+            return table;
+         }
+          
+        // function untuk check objek empty atau tidak
+        function isEmptyObject(obj) 
+          {
+            for (var key in obj) 
+            {
+             return false;
+            }
+            return true;
+         }
+          
+         // indeks x untuk pembuatan table
+         var x = 0;  
+         while (x < arrayDev.length) 
+         {
+          var FLOWS = [];
+          if (isEmptyObject(flowList[arrayDev[x]]) == false) 
+          {
+            var keykey=0;
+            //delete dictionary key nodeId, indeks ke-x dengan dictionary untuk key count
+            //delete flowList[arrayDev[x]][x]['Count'];
+            while (keykey < flowList[arrayDev[x]].length)
+            {
+            FLOWS.push(flowList[arrayDev[x]][keykey]);
+            keykey++;
+            }
+              
+          var title = document.createElement("p");
+          title.setAttribute("id", arrayDev[x]);
+          title.setAttribute("class", "divDeviceTitle");
+          title.style.textAlign = 'center';
+          title.innerHTML= "OpenFlow : " + arrayDev[x];
+         
+          var divAccordionSection = document.createElement("button");
+          divAccordionSection.setAttribute("class","divAccordionSection");
+          var divAccordionSectionId = 'divAccordionSection' + (x+1).toString();
+          divAccordionSection.setAttribute("id",divAccordionSectionId);
+          divAccordionSection.appendChild(title);
+              
+          var newLine = document.createElement('br');
+          
+          document.getElementById("deviceListId").appendChild(divAccordionSection);
+          document.getElementById("deviceListId").appendChild(buildTable(FLOWS));
+          document.getElementById("deviceListId").appendChild(newLine);
+          x++;
+          } 
+          else
+        {  
+          var title = document.createElement("p");
+          title.setAttribute("id", arrayDev[x]);
+          title.setAttribute("class", "divDeviceTitle");
+          title.style.textAlign = 'center';
+          title.innerHTML= "OpenFlow : " + arrayDev[x];
+         
+          var divAccordionSection = document.createElement("button");
+          divAccordionSection.setAttribute("class","divAccordionSection");
+          var divAccordionSectionId = 'divAccordionSection' + (x+1).toString();
+          divAccordionSection.setAttribute("id",divAccordionSectionId);
+          divAccordionSection.appendChild(title);
+          
+          var newLine = document.createElement('br');
+          
+          // TULISAN KOSONG
+          var kosong = document.createElement("p");
+          kosong.innerHTML= "KOSONG";
+          kosong.id="tulisanKosong";
+          document.getElementById("deviceListId").appendChild(divAccordionSection);
+          document.getElementById("deviceListId").appendChild(kosong);
+          document.getElementById("deviceListId").appendChild(newLine);
+         x++;
+            }
+         }
+        
+        // variable buat array dengan element selectdari class devicetable
+         var deviceTab = document.querySelectorAll('.devicetable');
+         // Setting Id untuk setiap Table Device
+         for (var i = 0; i < deviceTab.length; i++) {
+            deviceTab[i].id = 'table' + arrayDev[i];
+         }
+        
+        // penambahan bagian edit
+        
+        $('.devicetable').children('thead').children('tr').append('<th><b>Delete</b></th>');
+        $('.devicetable').children('tbody').children('tr').append('<td><a class ="editLink">Delete</a></td>');
+          
+        //mewarnai table, trial
+        var xxy = deviceTab.length;
+        //alert(xxy);
+        // table - tbody - tr - td 
+          
+        for (var i = 0; i < deviceTab.length; i++){
+                var rowLength = deviceTab[i].childNodes[1].childNodes.length; 
+                //alert(rowLength);
+                for (var iRow = 0; iRow < rowLength; iRow++){
+                    var number = deviceTab[i].childNodes[1].childNodes[iRow].childNodes[5];
+                    var link = deviceTab[i].childNodes[1].childNodes[iRow].childNodes[6].childNodes[0];
+                    if (link.getAttribute("href") == null) {
+                        var linkURL = "deleteFlow/" + number.textContent;
+                        link.setAttribute('href',linkURL);
+                        }
+                    }
+                }
+         
+          
+ 
+          
+        // menyembunyikan semua table agar tidak terlihat    
+         $(".devicetable").hide();
+         //toggle the componenet with class msg_body
+         $(".divAccordionSection").click(function(){
+          var $this = $(this); //  Cacheing $(this)
+          $('.devicetable').slideUp();
+          if( !$this.next(".devicetable").is('.open') ){
+         //$('h1').removeClass('active');
+         $('.devicetable').removeClass('open');
+         $this.addClass("active").siblings("button").removeClass("active");
+         $this.next(".devicetable").addClass('open').slideDown();
+          } else {
+         $("button").removeClass("active");
+         $this.next(".devicetable").removeClass('open').slideUp(); 
+          }
+         });
+            
+         //behaviour dari accordion
+         $(document).ready(function() {
+         function close_accordion_section() 
+         {
+             $('.deviceList .divDeviceTitle').removeClass('active');
+             $('.deviceList .divAccordionSectionContent').slideUp(300).removeClass('open');
+         }
+         
+         $('.divDeviceTitle').click(function(e) {
+         // Grab current anchor value
+         var currentAttrValue = $(this).attr('href');
+         if($(e.target).is('.active')) {
+         close_accordion_section();
+         }else {
+         close_accordion_section();
+         // Add active class to section title
+         $(this).addClass('active');
+         // Open up the hidden content panel
+         $('.deviceList ' + currentAttrValue).slideDown(300).addClass('open'); 
+         }
+         e.preventDefault();
+         });
+         });
+    
+                <!--Untuk NodeID List-->
+                //panggil div       
+                //Create and append the options
+                
+                var nodeId = document.getElementById("nodeId");
+            
+                for (var i = 0; i < arrayDev.length; i++) {
+                var option = document.createElement("option");
+                option.text = arrayDev[i];
+                option.value = arrayDev[i];
+                option.name = "NodeID"
+                nodeId.add(option);
+                }
+                var panjang = document.getElementById("nodeId").length;
+                //x.setAttribute("size",panjang);
+                
+                <!--Untuk NodeID List-->        
+       
+              <!--Untuk Accordion -->
+         
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+         
+            for (i = 0; i < acc.length; i++) {
+                    acc[i].onclick = function(){
+                        this.classList.toggle("active");
+                        this.nextElementSibling.classList.toggle("show");
+                  }
+                }
+         
+              <!--Untuk Accordion -->
+         
+              
+         
+              <!--Untuk Form Query yang Hidden -->
+         
+              //.getElementById("hiddenOutPortSelection").disabled = "true";
+              //document.getElementById("hiddenGotoTableSelection").disabled = "true";
+         
+              //function showOutport(ActionSelect){
+              //  if (ActionSelect === "OUTPORT") {document.getElementById("hiddenOutPortSelection").disabled = false}
+              //    else {document.getElementById("hiddenOutPortSelection").disabled = "true"};
+         
+              //  if (ActionSelect === "GOTOTABLE") {document.getElementById("hiddenGotoTableSelection").disabled = false}
+              //    else {document.getElementById("hiddenGotoTableSelection").disabled = "true"};
+              //}
+         
+              function validateFlow() {
+                if (document.forms["FlowForm"]["NodeID"].value == "") {alert("Node ID Should be Filled"); return false};
+                if (document.forms["FlowForm"]["TableID"].value == "") {alert("Table ID Should be Filled"); return false};
+                if (document.forms["FlowForm"]["FlowID"].value == "") {alert("Flow ID Should be Filled"); return false};
+                return true;
+              }
+
+
+          //untuk fungsi download
+          var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(savedJSON));
+          var downloadLink = document.getElementById('downloadLink');
+          downloadLink.href = "data:" + data;
+          downloadLink.download = "data.json";
+          downloadLink.textContent = "download JSON";
+          
+          //untuk fungsi exception pada checkbutton form 
+          var checkButton = document.querySelectorAll("input[type=checkbox]");
+
+          function disabledButtonDrop() {
+                //untuk button drop
+                if (checkButton[0].checked == true) {
+                    for (var y = 1; y < checkButton.length; y++) {
+                            checkButton[y].disabled = true;
+                            checkButton[y].checked = false;
+                    }
+                } 
+                else if (checkButton[0].checked == false) {
+                    for (var y = 1; y < checkButton.length; y++) {
+                            checkButton[y].disabled = false;
+                    }
+                }
+                
+            }
+
+          function disabledButtonResubmit() {
+                //untuk button drop
+                if (checkButton[5].checked == true) {
+		    document.getElementById('hiddenGotoTableSelection').disabled = false;
+                    for (var y = 0; y < 5; y++) {
+                            checkButton[y].disabled = true;
+                            checkButton[y].checked = false;
+                    }
+                } 
+                else if (checkButton[5].checked == false) {
+		    document.getElementById('hiddenGotoTableSelection').disabled = false;
+		    document.getElementById('hiddenGotoTableSelection').value = '';
+                    for (var y = 0; y < 5; y++) {
+                            checkButton[y].disabled = false;
+                    }
+                }
+                
+            }
+
+         function disabledButtonFlood() {
+                if (checkButton[1].checked == true) {
+                   checkButton[0].disabled = true;
+                   checkButton[2].disabled = true;
+                   checkButton[4].disabled = true;
+                   checkButton[5].disabled = true;
+                } else if (checkButton[1].checked == false) {
+                   for (var y = 0; y < checkButton.length ; y++) {
+                            checkButton[y].disabled = false;
+                    }
+                   
+                }
+                
+            }
+
+         function disabledButtonNormal() {
+                if (checkButton[2].checked == true) {
+                   checkButton[0].disabled = true;
+                   checkButton[1].disabled = true;
+                   checkButton[4].disabled = true;
+                   checkButton[5].disabled = true;
+                } else if (checkButton[2].checked == false) {
+                   for (var y = 0; y < checkButton.length ; y++) {
+                            checkButton[y].disabled = false;
+                    }
+                   
+                }
+                
+            }
+
+         function disabledButtonOutput() {
+                if (checkButton[4].checked == true) {
+                   checkButton[0].disabled = true;
+                   checkButton[2].disabled = true;
+                   checkButton[1].disabled = true;
+                   checkButton[5].disabled = true;
+		   document.getElementById('hiddenOutPortSelection').disabled = false;
+                } else if (checkButton[4].checked == false) {
+		   document.getElementById('hiddenOutPortSelection').disabled = true;
+		   document.getElementById('hiddenOutPortSelection').value = '';
+                   for (var y = 0; y < checkButton.length ; y++) {
+                            checkButton[y].disabled = false;
+                    }
+
+                   
+                }
+                
+            }
+      </script>
+   </body>
+</html>

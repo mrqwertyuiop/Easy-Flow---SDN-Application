@@ -1,0 +1,229 @@
+<!doctype html>
+<html>
+  <head>
+    <style type="text/css">
+      div.container {
+          width: 100%;
+          border: 2px solid gray;
+      }
+
+      header, footer {
+          padding: 1em;
+          color: white;
+          background-color: black;
+          clear: left;
+          text-align: center;
+	  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+      }
+
+      nav {
+          float: left;
+          max-width: 160px;
+          margin: 0;
+          padding: 1em;
+      }
+
+      nav ul {
+          list-style-type: none;
+          padding: 0;
+      }
+         
+      nav ul a {
+          text-decoration: none;
+      }
+
+      article {
+          margin-left: 170px;
+          border-left: 1px solid gray;
+          padding: 1em;
+          overflow: hidden;
+      }
+
+      table {
+          border-collapse: collapse;
+          border-spacing: 0;
+          width: 40%;
+          border: 1px solid gray;
+
+      }
+
+      th, td {
+          text-align: left;
+          padding: 10px;
+      }
+
+      tr:nth-child(even) {
+          background-color: #f2f2f2
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+
+      <header>
+        <img id="flowLogo" src="/static/logoputih.png" alt="Smiley face" height="60">
+	<h1>Aplikasi OpenFlow Sederhana</h1>
+      </header>
+
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/push">Push New Flow</a></li>
+          <li><a href="/upload">Upload Flow File</a></li>
+        </ul>
+      </nav>
+
+      <article>
+        <h1>Kirim Flow Baru</h1>
+
+        <table>
+
+          <form action = "/pushResult" method = "POST" name ="FlowForm" onsubmit = "return validateFlow()">
+            <tr>
+             <th>Node ID</th> 
+             <th><input type = "text" name = "NodeID" /></th>
+            </tr>
+
+            <tr>
+             <th>Table ID</th> 
+             <th><input type = "text" name = "TableID" /></th>
+            </tr>
+
+            <tr>
+             <th>Flow ID</th> 
+             <th><input type = "text" name = "FlowID" /></th>            
+            </tr>
+
+            <tr>
+             <th>Priority</th> 
+             <th><input type ="text" name = "Priority" /></th>
+            </tr>
+
+            <tr>
+             <th>Flow Name</th> 
+             <th><input type ="text" name = "FlowName" /></th>
+            </tr>
+
+            <tr>
+             <th>InPort</th>
+             <th><input type ="text" name = "InPort" /></th>
+           </tr>
+
+           <tr>
+             <th>IP Source</th>
+             <th><input type ="text" name = "IPSource" /></th>
+           </tr>
+
+           <tr>
+             <th>IP Destination</th> 
+             <th><input type ="text" name = "IPDestination" /></th>
+           </tr>
+
+           <tr>
+             <th>Ethernet Type</th> 
+             <th><input type ="text" name = "EthernetType" /></th>
+           </tr>
+
+           <tr>
+             <th>Ethernet Source</th> 
+             <th><input type ="text" name = "EthernetSource" /></th>
+           </tr>
+
+           <tr>
+             <th>Ethernet Destination</th>
+             <th><input type ="text" name = "EthernetDestination" /></th>
+           </tr>
+
+           <tr>
+             <th>TCP Source</th> 
+             <th><input type ="text" name = "TCPSource" /></th>
+           </tr>
+
+           <tr>
+             <th>TCP Destination</th> 
+             <th><input type ="text" name = "TCPDestination" /></th>
+           </tr>
+
+           <tr>
+             <th>Flow Actions</th>
+             <th> 
+              <select name="Actions" onchange="java_script_:showOutport(this.options[this.selectedIndex].value)">
+                <option value="DROP">Drop</option>
+                <option value="FLOOD">Flood</option>
+                <option value="NORMAL">Normal</option>
+                <option value="CONTROLLER">Controller</option>
+                <option value="OUTPORT">Physical Outport</option>
+                <option value="GOTOTABLE">Go To Table</option>            
+              </select> 
+            </th>
+           </tr>
+
+           <tr>
+            <th>OutPort Number</th>
+            <th><input type ="text" name = "OutPort" id="hiddenOutPortSelection"/></th>
+           </tr>
+
+           <tr>
+            <th>Go To Table Number</th>
+            <th><input type ="text" name = "TableNum" id="hiddenGotoTableSelection"/></th>
+           </tr>
+
+           <tr>
+             <th>Cookie</th> 
+             <th><input type ="text" name = "Cookie" /></th>
+           </tr>
+
+           <tr>
+             <th>Cookie Mask</th> 
+             <th><input type ="text" name = "CookieMask" /></th>
+           </tr>
+
+           <tr>
+             <th>Hard Timeout</th> 
+             <th><input type ="text" name = "HardTimeout" /></th>
+           </tr>
+
+           <tr>
+             <th>Idle Timeout</th> 
+             <th><input type ="text" name = "IdleTimeout" /></th>
+           </tr>
+
+           <tr>
+            <th>
+              <input type = "submit" value = "Push" />
+            </th>
+           </tr>
+
+          </form>
+        </table>
+      </article>
+
+      <footer>Copyright &copy; Team SDN - 18114019 (Radifan Pradana C) - 18114021 (Petra Febrianto L) - 18114024 (Fandi Rusdiantara)</footer>
+
+    </div>
+
+
+
+    <script>
+
+      document.getElementById("hiddenOutPortSelection").disabled = "true";
+      document.getElementById("hiddenGotoTableSelection").disabled = "true";
+      function showOutport(ActionSelect){
+        if (ActionSelect === "OUTPORT") {document.getElementById("hiddenOutPortSelection").disabled = false}
+          else {document.getElementById("hiddenOutPortSelection").disabled = "true"};
+
+        if (ActionSelect === "GOTOTABLE") {document.getElementById("hiddenGotoTableSelection").disabled = false}
+          else {document.getElementById("hiddenGotoTableSelection").disabled = "true"};
+      }
+
+      function validateFlow() {
+        if (document.forms["FlowForm"]["NodeID"].value == "") {alert("Node ID Should be Filled"); return false};
+        if (document.forms["FlowForm"]["TableID"].value == "") {alert("Table ID Should be Filled"); return false};
+        if (document.forms["FlowForm"]["FlowID"].value == "") {alert("Flow ID Should be Filled"); return false};
+        return true;
+      }
+
+    </script>
+  </body>
+</html>

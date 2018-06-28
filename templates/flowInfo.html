@@ -1,0 +1,260 @@
+<!doctype html>
+<html>
+  <head>
+    <style type="text/css">
+        
+        .nodeInfoClass {
+            margin: 25px;   
+            background-color: #ffffff;
+            border-left-style: solid;
+            border-left-width: thick;
+            border-left-color: #19535F;
+        }
+        
+        .tableinfo {
+         border-collapse:collapse;
+         border: 1px solid;
+         width:100%;
+         border-spacing: 0;
+	 text-align: center;
+        }
+
+	.tableinfo th {
+	background-color: #282d42;
+	color: white;
+	}
+
+         tr:nth-child(even) {
+         background-color: #FFFFFF;
+         }
+         
+          tr:nth-child(odd) {          
+            background-color: #edf2f4;
+          }
+    
+        .linkDivName {
+            text-decoration: none;
+            color: #19535F;
+            background-color: darkorange;
+        }
+        
+        .linkDivName:hover {
+            text-decoration: none;
+            color: black;
+            background-color: white;
+        }
+        
+        
+        
+       body{
+              font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	      margin: 0px;
+          }
+          
+         
+        
+         	       div.container {
+         width: 100%;
+       	 max-height: 100vh;
+         }
+        
+ footer {
+         clear: left;
+	       padding: 1em; 
+         color: #d8e2dc;
+         background-color: #282d42;
+         text-align: center;
+	       font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+         }
+
+        header {
+         padding: 1em;
+         position: static; 
+         color: #d8e2dc;
+         background-color: #282d42;
+         text-align: left;
+         font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+         }
+        
+        .headerDiv{
+          display: inline-block;
+        }
+         .navigation {
+                list-style-type: none;
+                margin: 0px;
+                padding: 0px;
+                overflow: hidden;
+                background-color: #282d42;
+                background-size: cover;
+            }
+
+        .navigation li {
+            float: left;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .navigation li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 16px;
+            text-decoration: none;
+            }
+
+        .navigation li a:hover {
+            background-color: #8d99ae;
+        }
+        
+        #flowLogo {
+	    max-height: 50px;
+        }
+        
+         article {
+         padding: 2em;
+         overflow: hidden;
+	 min-height: 465px;
+         }
+
+         
+    </style>
+  </head>
+   <title>Easy Flow</title>
+   <link rel="easy flow icon" href="{{url_for('static', filename='favicon.png')}}">
+
+  <body>
+    <div class="container">
+
+      <header>
+         
+         <img id="flowLogo" src="/static/logoputih.png" alt="Easy Flow">
+         
+         
+         <div class='headerDiv'>
+         <ul class="navigation">
+           <li><a href="/" class="navigation">Home</a></li>
+           <li><a href="/push" class="navigation">Build New Flow</a></li>  
+           <li><a href="/upload" class="navigation">Upload Flow File</a></li>
+           <li><a href="/settings" class="navigation">Controller Settings</a></li>
+	   <li><a href="/about" class="navigation">About</a></li>
+        </ul>
+        </div>
+      </header>
+
+      <article>
+        <h1 id='deviceTitle'><b>{{deviceNodeId}}</b></h1>
+        <div id="container"></div>
+      </article>
+
+      <footer>Copyright &copy; Team SDN - 18114019 (Radifan Pradana C) - 18114021 (Petra Febrianto L) - 18114024 (Fandi Rusdiantara)</footer>
+    </div>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+
+    <script> 
+
+	// fungsi untuk buat tabel
+        function buildTable(data) {
+            var table = document.createElement("table");
+            table.className="tableinfo";
+            var thead = document.createElement("thead");
+            var tbody = document.createElement("tbody");
+            var headRow = document.createElement("tr");
+            ["Flow ID","Priority","Matches","Actions"].forEach(function(el) {
+              var th = document.createElement("th");
+              th.appendChild(document.createTextNode(el));
+              headRow.appendChild(th);
+            });
+            thead.appendChild(headRow);
+            table.appendChild(thead); 
+            data.forEach(function(el) {
+              var tr = document.createElement("tr");
+              for (var o in el) {
+                var td = document.createElement("td");
+                td.className = "flowCell";
+                td.appendChild(document.createTextNode(el[o]))
+                tr.appendChild(td);
+              }
+              tbody.appendChild(tr);  
+            });
+            table.appendChild(tbody);  
+            return table;
+         }
+
+	        //fungsi perika objek ada atau tidak
+        function isEmptyObject(obj) 
+          {
+            for (var key in obj) 
+            {
+             return false;
+            }
+            return true;
+         }
+
+        //get data flow dari backend
+        //contoh data tabel
+        //var contoh = [{"Table ID":"none","ReferenceNumber":"none","Priority":"none","FlowID":'none',"Matches":"none", "Actions":"none"}];
+        var getTableFlowsParsed = JSON.parse ('{{getTableFlowsParsed | tojson}}');
+        
+
+        //var getTableFlowsParsed = {"Table0": [{"1Flow ID": "L2switch-0", "2Priority": 0, "3Match": "Inprogress", "4Actions": "Drop"}, {"1Flow ID": "L2switch-1", "2Priority": 2, "3Match": "Inprogress", "4Actions": "Output: CONTROLLER, Output: 1, Output: 3, Output: 4"}, {"1Flow ID": "L2switch-2", "2Priority": 2, "3Match": "Inprogress", "4Actions": "Output: CONTROLLER, Output: 1, Output: 2, Output: 4"}, {"1Flow ID": "L2switch-3", "2Priority": 2, "3Match": "Inprogress", "4Actions": "Output: CONTROLLER, Output: 1, Output: 2, Output: 3"}, {"1Flow ID": "#UF$TABLE*0-2", "2Priority": 2, "3Match": "Inprogress", "4Actions": "Output: CONTROLLER, Output: 2, Output: 3, Output: 4"}, {"1Flow ID": "#UF$TABLE*0-1", "2Priority": 100, "3Match": "Inprogress", "4Actions": "Output: CONTROLLER"}], "Table1": [{"1Flow ID": "100", "2Priority": 666, "3Match": "Inprogress", "4Actions": "Output: FLOOD"}]};
+        
+        
+        var lengthInfo = getTableFlowsParsed.length;
+        var container = document.getElementById('container');
+        var indeks = 0;       
+	
+
+
+//x merupakan indeksbuat tabel
+         var indeksTabel = [];
+         
+        for (var table in getTableFlowsParsed)
+         {
+         //pembuatan indeks setiap tabel
+         var nama = table.slice(-1);
+         indeksTabel.push(nama);
+         var info = getTableFlowsParsed[table];
+         var tulisan = JSON.stringify(info);
+         info = getTableFlowsParsed[table];
+         var baris = document.createElement('br');
+         var namaTabel = document.createElement('h2');
+         namaTabel.textContent = table;
+         namaTabel.setAttribute('class','namaTabel');
+         container.appendChild(namaTabel);
+         container.appendChild(buildTable(info));
+         container.appendChild(baris);
+         }
+    
+
+            
+	//contoh url /deleteDeviceFlow/string device numb/ int table number/int flow number
+        //tambah link edit
+        $('.tableinfo').children('thead').children('tr').append('<th>Delete</th>');
+        $('.tableinfo').children('tbody').children('tr').append('<td><a class ="editLink">Delete</a></td>');
+    
+	//seleksi semua kelas table device        
+        var table = document.querySelectorAll('.tableinfo');
+        var tableLength = table.length;
+        
+	
+        // table - tbody - tr - td 
+            for (var i = 0; i < tableLength; i++){
+		//alert('hola');
+                var rowLength = table[i].childNodes[1].childNodes.length;
+                for (var iRow = 0; iRow < rowLength; iRow++){
+                    //var deviceNodeId = JSON.parse
+                    var table 
+                    var flowId = table[i].childNodes[1].childNodes[iRow].childNodes[0];
+                    var link = table[i].childNodes[1].childNodes[iRow].childNodes[4].childNodes[0];
+                    //link.style.backgroundColor = "yellow";
+                    if (link.getAttribute("href") == null) {
+                        var linkURL = "deleteDeviceFlow/{{ deviceNodeId }}/"+ indeksTabel[i] +"/"+ flowId.textContent;
+                        link.setAttribute('href',linkURL);
+                        }	
+		}
+	}
+	
+    </script>
+  </body>
+</html>

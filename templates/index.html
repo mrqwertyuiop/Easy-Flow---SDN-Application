@@ -1,0 +1,311 @@
+<!doctype html>
+<html>
+  <head>
+    <style type="text/css">
+        
+        .nodeInfoClass {
+            margin: 25px;   
+            background-color: #edf2f4;
+            border-left-style: solid;
+            border-left-width: thick;
+            border-left-color: #282d42;
+        }
+        
+        .nodeDetails {
+            padding-left: 10px;
+	    line-height: 80%;
+	    letter-spacing: 0px;
+        }
+        
+        .linkDivName {
+            font-size: 20px;
+            color: black;
+        }
+        
+        .linkDivName:hover {
+            text-decoration: none;
+            color: black;
+        }
+
+	      html{
+          height: 100%;
+        }
+        
+        body{
+          font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	      margin: 0px;      
+          }
+          
+        .divAccordionSection {
+          background-color: #E9ECF5;
+          border-right: none;
+          border-bottom: none;
+          border-top: none;
+              
+          border-left-style: solid;
+          border-left-width: thick;
+          border-left-color: #19535F;
+          color: white;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          cursor: pointer;
+          width: 100%;              
+        }
+        
+        .divDeviceTitle {
+          color: black;
+          }
+
+        .divAccordionSection:hover {
+          background-color: #ffffff;
+          border-left-style: solid;
+          border-left-width: thick;
+          border-left-color: #19535F;
+        }
+
+        .devicetable {
+        border-collapse:collapse;
+        border: 1px solid;
+        width:100%;
+        border-spacing: 0;    
+        }
+              
+        #daftarDevice {
+        }
+         .showAllTableFLow {
+         background-color:black; 
+         overflow:hidden;
+         color: brown;
+         }
+          
+         #nodeId{
+         width: 50%;
+         background-color: yellow;
+         }
+          
+         button.accordion {
+         background-color: #eee;
+         color: #444;
+         cursor: pointer;
+         padding: 18px;
+         width: 100%;
+         border: none;
+         text-align: left;
+         outline: none;
+         font-size: 15px;
+         transition: 0.4s;
+         }
+         button.accordion.active, button.accordion:hover {
+         background-color: #ddd;
+         }
+         div.device {
+         background-color: white;
+         max-height: 0;
+         overflow: hidden;
+         transition: 0.6s ease-in-out;
+         opacity: 0;
+         }
+         div.device.show {
+         opacity: 1;
+         max-height: 500px;  
+         }
+         
+	       div.container {
+         width: 100%;
+       	 max-height: 100vh;
+         }
+
+
+       	 footer {
+         clear: left;
+	       padding: 1em; 
+         color: #d8e2dc;
+         background-color: #282d42;
+         text-align: center;
+	       font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+         }
+
+        header {
+         padding: 1em;
+         position: static; 
+         color: #d8e2dc;
+         background-color: #282d42;
+         text-align: left;
+         font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+         }
+        
+        .headerDiv{
+          display: inline-block;
+        }
+         .navigation {
+                list-style-type: none;
+                margin: 0px;
+                padding: 0px;
+                overflow: hidden;
+                background-color: #282d42;
+                background-size: cover;
+            }
+
+        .navigation li {
+            float: left;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .navigation li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 16px;
+            text-decoration: none;
+            }
+
+        .navigation li a:hover {
+            background-color: #8d99ae;
+        }
+        
+        #flowLogo {
+	    max-height: 50px;
+        }
+        
+         article {
+         padding: 2em;
+         overflow: hidden;
+ 	 min-height: 465px;
+         
+         }
+         table.form {
+         border-collapse: collapse;
+         border-spacing: 0;
+         width: 60%;
+         border: 1px solid #ddd;
+         background-color: lightblue;
+         }
+         table.saved {
+         border-collapse: collapse;
+         border-spacing: 0;
+         width: 100%;
+         border: 1px solid #ddd;
+         }
+         th, td {
+         text-align: left;
+         padding: 16px;
+         }
+          
+         tr:nth-child(even) {
+         background-color: #FFFFFF;
+         }
+         
+          tr:nth-child(odd) {
+              
+            background-color: #E9ECF5
+          }
+          
+          table thead tr{
+              background-color: white;
+          }
+
+    </style>
+	<title>Easy Flow</title>
+	<link rel="easy flow icon" href="{{url_for('static', filename='favicon.png')}}">
+  </head>
+  <body background='/static/background.png'>
+    <div class="container">
+
+     <header>
+         
+             <img id="flowLogo" src="/static/logoputih.png" alt="Easy Flow">
+         
+         
+         <div class='headerDiv'>
+         <ul class="navigation">
+           <li><a href="/" class="navigation">Home</a></li>
+           <li><a href="/push" class="navigation">Build New Flow</a></li>  
+           <li><a href="/upload" class="navigation">Upload Flow File</a></li>
+           <li><a href="/settings" class="navigation">Controller Settings</a></li>
+	   <li><a href="/about" class="navigation">About</a></li>
+        </ul>
+        </div>
+      </header>
+
+      <article>
+          <h1>Devices List</h1>
+        <div id="container"></div>
+      </article>
+
+      <footer>Copyright &copy; Team SDN - 18114019 (Radifan Pradana C) - 18114021 (Petra Febrianto L) - 18114024 (Fandi Rusdiantara)</footer>
+
+    </div>
+
+
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script>
+        function isEmptyObject(obj) 
+          {
+            for (var key in obj) 
+            {
+             return false;
+            }
+            return true;
+         }
+
+        //get data nodeInfoList dari backend
+        var nodeInfoList = JSON.parse ('{{connectedNodeInfoList | tojson}}');
+        //var nodeInfoList  = [{"IP": "Unavailable","Name": "Unavailable","NodeID": "openflow:14236239536307964936"},
+        //                        {"IP": "10.10.5.92","Name": "PetraBridge","NodeID": "openflow:16679160859179748360"},
+        //                     {"IP": "10.10.5.92","Name": "CobaBridge","NodeID": "openflow:2425830988505549832"}]
+        
+        var lengthInfo = nodeInfoList.length;
+        var container = document.getElementById('container');
+        var indeks = 0;
+        
+        
+        //fungsi paragraph untuk details dengan pasangan key-value
+        function makeParagraph(obj,divId){
+            for (var key in obj) {
+                var x = document.createElement('p');
+                x.setAttribute('class','nodeDetails');
+                var value = obj[key];
+                x.innerHTML = key + ' : ' + value;
+                document.getElementById(divId).appendChild(x);
+            }
+        }
+        
+        
+        if (isEmptyObject(nodeInfoList) == false) {
+            while (indeks < lengthInfo)
+                {
+                  var divName = document.createElement("div");
+                  divName.setAttribute("class", 'nodeInfoClass');
+                  divName.setAttribute('id', nodeInfoList[indeks]['NodeID']);
+                    
+                  var linkDivName = document.createElement('a');
+                  linkDivName.setAttribute('class','linkDivName');
+                  var href = '/nodeInfoList/' + nodeInfoList[indeks]['NodeID'] ;
+                  linkDivName.setAttribute('href',href);
+                  linkDivName.textContent = nodeInfoList[indeks]['NodeID'];
+                    
+                  divName.appendChild(linkDivName); 
+                  container.appendChild(divName);
+                  makeParagraph(nodeInfoList[indeks],divName.getAttribute('id'));
+                   
+                  indeks++;
+                }
+        } 
+        else {
+            var tulisanKosong = document.createElement("p");
+            tulisanKosong.textContent = "No Device Connected";
+            // sisipkan tulisan ke dalam container
+            container.appendChild(tulisanKosong);
+        }
+        
+    
+        
+        
+      
+    </script>
+  </body>
+</html>

@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+  <head>
+    <style type="text/css"> 
+
+	body{
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	      	margin: 0px;      
+          }
+                            
+         div.container {
+         width: 100%;
+       	 max-height: 100vh;
+         }
+
+	footer {
+         clear: left;
+	       padding: 1em; 
+         color: #d8e2dc;
+         background-color: #282d42;
+         text-align: center;
+	       font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+         }
+
+        header {
+         padding: 1em;
+         position: static; 
+         color: #d8e2dc;
+         background-color: #282d42;
+         text-align: left;
+         font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+         }
+        
+        .headerDiv{
+          display: inline-block;
+        }
+         .navigation {
+                list-style-type: none;
+                margin: 0px;
+                padding: 0px;
+                overflow: hidden;
+                background-color: #282d42;
+                background-size: cover;
+            }
+
+        .navigation li {
+            float: left;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .navigation li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 16px;
+            text-decoration: none;
+            }
+
+        .navigation li a:hover {
+            background-color: #8d99ae;
+        }
+        
+        #flowLogo {
+	    max-height: 50px;
+        }
+        
+         article {
+         padding: 2em;
+         overflow: hidden;
+	 min-height: 465px;
+         
+         }
+         
+
+         
+         table.form {
+         border-collapse: collapse;
+         border-spacing: 0;
+         width: 60%;
+         border: 1px solid #ddd;
+         background-color: lightblue;
+         }
+
+         table.saved {
+         border-collapse: collapse;
+         border-spacing: 0;
+         width: 100%;
+         border: 1px solid #ddd;
+         }
+
+         th, td {
+         text-align: left;
+         padding: 16px;
+         }
+          
+          
+          
+	#saveButton{
+	background-color: white; 
+	color: black; 
+    	border: 2px solid #282d42;
+	}
+
+	#saveButton:hover{
+	background-color: #282d42;
+    	color: white;	
+	}
+
+    </style>
+  </head>
+  <title>Easy Flow</title>
+   <link rel="easy flow icon" href="{{url_for('static', filename='favicon.png')}}">
+
+  <body>
+    <div class="container">
+
+      <header>
+         <div class='headerDiv'>
+             <img id="flowLogo" src="/static/logoputih.png" alt="Easy Flow">
+         </div>
+         
+         <div class='headerDiv'>
+         <ul class="navigation">
+           <li><a href="/" class="navigation">Home</a></li>
+           <li><a href="/push" class="navigation">Build New Flow</a></li>  
+           <li><a href="/upload" class="navigation">Upload Flow File</a></li>
+           <li><a href="/settings" class="navigation">Controller Settings</a></li>
+	   <li><a href="/about" class="navigation">About</a></li>
+        </ul>
+        </div>
+      </header>
+
+      <article>
+        <h1>Controller Settings</h1>
+        <form action = "/saveSettings" method = "POST">
+          <table>
+            <tr>
+              <td>Controller IP: </td>
+              <td><input type ="text" name = "NewControllerIP"/ placeholder = "{{ controllerIPAddress }}"></td>
+            </tr>
+
+            <tr>
+              <td>Controller Port: </td>
+              <td><input type ="text" name = "NewControllerPort"/ placeholder = "{{ controllerTCPPort }}" ></td>
+            </tr>
+          </table>
+	  <br>
+          <input type = "submit" value = "Save" id='saveButton' />
+        </form>
+
+
+
+      </article>
+
+<footer>
+            Copyright &copy; Team SDN - 18114019 (Radifan Pradana C) - 18114021 (Petra Febrianto L) - 18114024 (Fandi Rusdiantara)
+         </footer>
+
+
+
+  </body>
